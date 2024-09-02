@@ -375,7 +375,7 @@ def process_image(image_path, shared_key, output_queue):
     except Exception as e:
         print(f"Error processing {image_path}: {e}")
 
-def encrypt_multiple_images(image_paths, shared_key):
+def result_multiple_images(image_paths, shared_key):
     threads = []
     output_queue = Queue()
 
@@ -405,8 +405,8 @@ def encrypt_multiple_images(image_paths, shared_key):
 
 #----------------------------------------------------------------------------------------------------#
 # Route for handling multiple image encryption
-@app.route('/encrypt_multiple', methods=['POST'])
-def encrypt_multiple():
+@app.route('/result_multiple', methods=['POST'])
+def result_multiple():
     if 'files[]' not in request.files:
         return redirect(url_for('index'))
 
@@ -426,7 +426,7 @@ def encrypt_multiple():
         file.save(image_path)
         image_paths.append(image_path)
 
-    combined_rna, encrypted_image_paths = encrypt_multiple_images(image_paths, shared_key)
+    combined_rna, encrypted_image_paths = result_multiple_images(image_paths, shared_key)
 
     mutated_rna = mutate_rna(combined_rna,shared_key[2])
     rna_filename = os.path.join('static', 'mutated_rna.txt')
