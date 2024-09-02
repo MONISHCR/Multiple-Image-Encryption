@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 from flask import send_file
 from zipfile import ZipFile
 import os
+import traceback
+
 
 app = Flask(__name__)
 
@@ -338,6 +340,24 @@ uploads_dir = os.path.join(os.getcwd(), 'uploads')
 os.makedirs(uploads_dir, exist_ok=True)
 
 def process_image(image_path, shared_key, output_queue):
+    try:
+        mode = image_path.split('.')[-1]
+        im = Image.open(image_path, 'r')
+
+        encrypted_image = HenonEncryption(im, shared_key)
+        cube = convert_image_to_3d_cube(encrypted_image)
+        binary_image = cube_to_binary(cube, mode)
+        rna_image = binary_to_RNA(binary_image)
+        print(len(rna_image))
+
+        # Save the encrypted image
+        encrypted_image_path = os.path.join('static', f'encrypted_{os.path.basename(image_path)}')
+        encrypted_image.save(encrypted_image_path)
+
+        output_queue.put((rna_image, encrypted_image_path))
+    except Exception as e:
+        print(f"Error processing {image_path}: {e}")
+        print(traceback.format_exc())
     try:
         mode = image_path.split('.')[-1]
         im = Image.open(image_path, 'r')
