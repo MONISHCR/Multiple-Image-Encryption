@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decryption Result</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyZkkmaU8NBEvrc1hPz2YxI2c4FMIq7xS" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light blue background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff; /* White background */
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2rem; /* Larger font size */
+            color: #007bff; /* Bootstrap primary color */
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-download {
+            margin-top: 10px;
+            font-size: 1rem;
+            background-color: #28a745; /* Bootstrap success color */
+            border-color: #28a745;
+            color: #ffffff;
+            transition: background-color 0.3s ease-in-out;
+            display: block;
+            width: 100%;
+        }
+
+        .btn-download:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Decryption Result</h1>
+        {% if image_paths %}
+            {% for image_path in image_paths %}
+                <div class="image-container">
+                    <img src="{{ image_path }}" alt="Decrypted Image Preview">
+                    <button class="btn btn-success btn-download" onclick="downloadImage('{{ image_path }}', 'Decrypted_Image{{ loop.index }}')">
+                        Download Image
+                    </button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No images to display.</p>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-xUZOsxmBLL8BIRkUsP5eJeUpRsZp/P6PU7zJ/N9p1qUao6BvGwbI3Z9nsPUpJANd" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyZkkmaU8NBEvrc1hPz2YxI2c4FMIq7xS" crossorigin="anonymous"></script>
+
+    <script>
+        function downloadImage(imagePath, fileName) {
+            var link = document.createElement('a');
+            link.href = imagePath;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

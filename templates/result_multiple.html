@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Image Encryption Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 800px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #2ecc71;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        a:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .images-grid img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .images-grid img.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 15px;
+            }
+
+            .button, a {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Multiple Image Encryption Result</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <button class="button" onclick="history.back()">Back</button>
+
+            <h2>RNA Sequence</h2>
+            <p><a href="{{ rna_filename }}" download="mutated_rna_multiple.txt">Download RNA Sequences</a></p>
+
+            <h2>Encrypted Images</h2>
+            <button class="button" id="toggleImagesButton" onclick="toggleImages()">Toggle Encrypted Images</button>
+
+            <div class="images-grid">
+                {% for encrypted_image_path in encrypted_image_paths %}
+                    <img src="{{ encrypted_image_path }}" alt="Encrypted Image" class="encrypted-image">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleImages() {
+            var images = document.querySelectorAll('.encrypted-image');
+            images.forEach(function(image) {
+                image.classList.toggle('show');
+            });
+        }
+    </script>
+
+</body>
+</html>
